@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 
 # Выбираем абсолютный путь - берём за основу этот файл и поднимаемся на две директории выше
 BASE_DIR = Path(__file__).resolve().parent.parent
-IMG_DIR = os.path.join(BASE_DIR, "img")
+IMG_DIR = os.path.join(BASE_DIR, "predict_stock_crypto", "img")#поменял с IMG_DIR = os.path.join(BASE_DIR, "img")
 STOCKS_CRYPTO_DIR = os.path.join(BASE_DIR, "stocks_list")
 DATABASE_DIR = os.path.join(BASE_DIR, "database")
 DATABASE = os.path.join(DATABASE_DIR, "users.db")
@@ -34,7 +34,7 @@ COUNTRY = "United States"
 PYPLOT_SET_GRAPH = "fivethirtyeight"
 
 # Загрузим переменные окружения
-load_dotenv()
+load_dotenv('C:/Project_Massyanya_New/config/.env')
 
 # При работе с переменными окружения, будем использовать getenv
 # В отличии от environ, getenv не вызывает исключения,
