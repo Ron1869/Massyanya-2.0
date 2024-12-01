@@ -1,20 +1,32 @@
 import sys
 from flask import Flask, request, jsonify
+from dotenv import load_dotenv
+
 from extensions.investpy import investpy
-from extensions.news_parsing_movies import parse_news
-from extensions.minio import MinioClient
-from extensions.telegram_bot import TelegramBot  # Telegram бот (добавь свой модуль)
-import threading  # Для запуска Telegram-бота параллельно с веб-сервером
+from minio import Minio
+from predict_stock_crypto.messaging.telegram_bot import TelegramBot
+import os
+import threading
+
+# Загрузка переменных из .env
+load_dotenv(dotenv_path="config/.env")
+TOKEN = os.getenv("TOKEN")
+CHAT_ID = os.getenv("CHATID")
 
 # --- Инициализация Flask-приложения ---
 app = Flask(__name__)
 
 # --- Настройка MinIO ---
-minio_client = MinioClient()
-minio_client.connect()  # Проверка подключения к MinIO
+minio_client = Minio(
+    "127.0.0.1:9000",  # Убедись, что здесь нет протокола (http://)
+    access_key="minioadmin",
+    secret_key="minioadmin",
+    secure=False
+)
+
 
 # --- Инициализация Telegram-бота ---
-bot = TelegramBot()
+bot = TelegramBot(token=TOKEN)
 
 # --- Главная страница веб-интерфейса ---
 @app.route("/")
@@ -47,26 +59,8 @@ def run_predictions():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# --- Парсинг новостей ---
-@app.route("/parse-news", methods=["GET"])
-def parse_news_route():
-    try:
-        url = request.args.get("url", "https://example.com")
-        news = parse_news(url)
-        return jsonify({"message": "Новости успешно собраны!", "news": news})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
 # --- Точка входа ---
 if __name__ == "__main__":
-    try:
-        print("Инициализация проекта Massyanya-2.0...")
-        print("Проверка MinIO подключения...")
-        minio_client.connect()
-        print("MinIO успешно подключен!")
-    except Exception as e:
-        print(f"Ошибка подключения MinIO: {str(e)}")
-        sys.exit(1)
-
-    # Запуск веб-сервера
+    print("Инициализация проекта Massyanya-2.0...")
+    print("Запуск веб-сервера...")
     app.run(host="0.0.0.0", port=5000)

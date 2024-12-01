@@ -1,7 +1,7 @@
 # messaging/telegram_bot.py
 import telegram
 from telegram.ext import ConversationHandler, Updater
-
+from telegram.ext import CommandHandler, MessageHandler, Filters
 # Обновляем директорию для импорта встроенных модулей
 from os import path
 from sys import path as sys_path
@@ -525,3 +525,34 @@ def get_low_level_graph(update, context) -> None:
         name_levels="Low",
         func_message="Нижних уровней",
     )
+
+class TelegramBot:
+    def __init__(self, token):
+        self.token = token
+        self.updater = Updater(token=token, use_context=True)
+
+    def run(self):
+        dispatcher = self.updater.dispatcher
+
+        # Добавляем обработчики для ConversationHandler
+        conversation_handler = ConversationHandler(
+            entry_points=[CommandHandler('start', first_starting_messaging)],
+            states={
+                "stage_1": [MessageHandler(Filters.text & ~Filters.command, add_crypto_in_watchlist)],
+            },
+            fallbacks=[CommandHandler('cancel', see_menu_home)]
+        )
+
+        dispatcher.add_handler(conversation_handler)
+
+        print("Запуск Telegram бота...")
+        self.updater.start_polling()
+
+        # Вместо self.updater.idle() — бесконечный цикл для обработки событий
+        try:
+            while True:
+                pass
+        except KeyboardInterrupt:
+            print("Остановка Telegram бота...")
+            self.updater.stop()
+
