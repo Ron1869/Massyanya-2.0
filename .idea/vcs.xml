@@ -2,5 +2,10 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Massyanya" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Massyanya-2.0" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/extensions/news_parsing_movies" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/investpy" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/minio" vcs="Git" />
   </component>
 </project>
