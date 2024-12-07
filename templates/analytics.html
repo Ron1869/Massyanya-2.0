@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}График{% endblock %}
+
+{% block content %}
+<div class="chart-container">
+    <h1>График</h1>
+    <p>Здесь отображаются данные анализа и прогнозов.</p>
+
+    <!-- Выбор графика -->
+    <div class="chart-controls">
+        <label for="chartTypeSelect">Тип графика:</label>
+        <select id="chartTypeSelect">
+            <option value="line" selected>Линейный</option>
+            <option value="bar">Гистограмма</option>
+            <option value="radar">Радар</option>
+        </select>
+
+        <label for="timeframeSelect">Таймфрейм:</label>
+        <select id="timeframeSelect">
+            <option value="1min">1 мин</option>
+            <option value="5min">5 мин</option>
+            <option value="15min">15 мин</option>
+            <option value="1h">1 час</option>
+            <option value="4h">4 часа</option>
+            <option value="1d">1 день</option>
+        </select>
+
+        <button id="updateChartButton">Обновить</button>
+    </div>
+
+    <!-- График -->
+    <canvas id="predictionChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/static/js/analytics.js"></script>
+{% endblock %}

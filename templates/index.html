@@ -1,12 +1,79 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Massyanya-2.0</title>
-</head>
-<body>
-    <h1>Добро пожаловать в Massyanya-2.0</h1>
-    <p>Интерфейс для управления ботом.</p>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+<h1 class="main-title">
+    <span>😈</span> Massyanya <span>😈</span>
+</h1>
+
+    <p>Баланс (USDT): <span id="balance">50.08</span></p>
+
+    <div class="section-container">
+        <!-- Блок чата -->
+        <div class="chat-container">
+            <h3>Чат команд</h3>
+            <div class="chat-box" contenteditable="true" id="chatBox" placeholder="Введите команду..."></div>
+            <button id="sendButton">Отправить</button>
+        </div>
+
+        <!-- Блок настроек -->
+        <div class="settings-container">
+            <h3>Настройки</h3>
+            <form id="settingsForm">
+                <!-- Выбор рынка с ценой -->
+                <div class="setting-item">
+                    <label>Выбор рынка:</label>
+                    <select id="marketSelect">
+                        <option>Спот</option>
+                        <option>Фьючерсы</option>
+                    </select>
+                    <span class="setting-info">цена BTC/USDT: <span id="btc-price">91371.10</span></span>
+                </div>
+
+                <!-- Добавить монету -->
+                <label>Добавить монету:</label>
+                <div class="coin-action">
+                    <input type="text" id="addCoinInput" placeholder="Введите символ монеты">
+                    <button type="button" id="addCoinButton">➕</button>
+                </div>
+
+                <!-- Удалить монету -->
+                <label>Удалить монету:</label>
+                <div class="coin-action">
+                    <input type="text" id="removeCoinInput" placeholder="Введите символ монеты">
+                    <button type="button" id="removeCoinButton">➖</button>
+                </div>
+
+                <!-- Тайм-фрейм с объёмом -->
+                <div class="setting-item">
+                    <label>Тайм-фрейм:</label>
+                    <select id="timeframeSelect">
+                        <option>1 мин</option>
+                        <option>5 мин</option>
+                        <option>15 мин</option>
+                        <option>1 час</option>
+                        <option>4 часа</option>
+                        <option>1 день</option>
+                    </select>
+                    <span class="setting-info">объем: <span id="volume">13512948251.62</span></span>
+                </div>
+
+                <label>Настройки прогноза:</label>
+                <textarea id="forecastSettings" placeholder="Опишите настройки прогноза..."></textarea>
+                <button type="submit">Сохранить</button>
+            </form>
+        </div>
+
+        <!-- Блок списка сохранённых монет -->
+        <div class="saved-coins-container">
+            <h3>Сохранённые монеты</h3>
+            <ul id="savedCoinsList">
+                <!-- Список монет будет заполняться динамически -->
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/index.js"></script>
+{% endblock %}

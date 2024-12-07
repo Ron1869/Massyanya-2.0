@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Massyanya{% endblock %}</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Основные стили -->
+    <link rel="stylesheet" href="/static/css/styles.css">
+
+    <!-- Дополнительные стили для страниц -->
+    {% block extra_css %}
+    {% endblock %}
+</head>
+<body>
+    <!-- Верхняя панель -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="/" class="{% if request.path == '/' %}active{% endif %}">Главная</a></li>
+            <li><a href="/analytics" class="{% if request.path == '/analytics' %}active{% endif %}">График</a></li>
+            <li><a href="/trade-settings" class="{% if request.path == '/trade-settings' %}active{% endif %}">Настройки торговли</a></li>
+            <li><a href="/data" class="{% if request.path == '/data' %}active{% endif %}">База данных</a></li>
+            <li><a href="/keys" class="{% if request.path == '/keys' %}active{% endif %}">IP и Ключи для Брокера</a></li>
+        </ul>
+    </nav>
+
+    <!-- Основной контент страницы -->
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+
+    <!-- Подключение основного JavaScript -->
+    <script src="/static/js/script.js"></script>
+
+    <!-- Дополнительные скрипты для страниц -->
+    {% block extra_js %}
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}IP и Ключи{% endblock %}
+
+{% block content %}
+<div class="keys-page">
+    <h1>IP и Ключи</h1>
+    <p>Здесь можно настроить IP-адреса и API-ключи для работы с брокером.</p>
+
+    <div class="keys-container">
+        <!-- Форма для настройки -->
+        <form id="keysForm">
+            <label for="broker-ip">IP-адрес брокера:</label>
+            <input type="text" id="broker-ip" name="broker-ip" placeholder="Введите IP-адрес">
+
+            <label for="api-key">API-ключ:</label>
+            <input type="text" id="api-key" name="api-key" placeholder="Введите API-ключ">
+
+            <label for="api-secret">Секретный ключ:</label>
+            <input type="text" id="api-secret" name="api-secret" placeholder="Введите секретный ключ">
+
+            <div class="form-actions">
+                <button type="submit">Сохранить</button>
+                <button type="button" id="resetButton">Сбросить</button>
+            </div>
+        </form>
+
+        <!-- Список сохранённых ключей -->
+        <div class="keys-list">
+            <h2>Сохранённые ключи</h2>
+            <ul id="savedKeysList">
+                <!-- Список будет заполняться динамически -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Уведомление -->
+    <div id="keysMessage" style="display: none; margin-top: 20px;"></div>
+</div>
+
+<script src="/static/js/keys.js"></script>
+{% endblock %}

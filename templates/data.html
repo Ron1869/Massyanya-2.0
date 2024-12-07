@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}База данных{% endblock %}
+
+{% block content %}
+<div class="database-page">
+    <h1>База данных</h1>
+    <p>Здесь отображаются данные из базы, используемые для прогнозов.</p>
+
+    <!-- Кнопка для обновления данных -->
+    <button id="refreshDataButton">Обновить данные</button>
+
+    <!-- Секция таблицы -->
+    <table class="data-table" id="dataTable">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Дата</th>
+                <th>Значение</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Данные таблицы будут динамически обновляться -->
+            <tr>
+                <td>BTC/USD</td>
+                <td>01.12.2024</td>
+                <td>91371.10</td>
+            </tr>
+            <tr>
+                <td>ETH/USD</td>
+                <td>01.12.2024</td>
+                <td>4731.00</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="/static/js/data.js"></script>
+{% endblock %}
