@@ -1,8 +1,6 @@
 import sys
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from dotenv import load_dotenv
-
-from extensions.investpy import investpy
 from minio import Minio
 from predict_stock_crypto.messaging.telegram_bot import TelegramBot
 import os
@@ -24,21 +22,39 @@ minio_client = Minio(
     secure=False
 )
 
-
 # --- Инициализация Telegram-бота ---
 bot = TelegramBot(token=TOKEN)
 
-# --- Главная страница веб-интерфейса ---
+
+# --- Главная страница ---
 @app.route("/")
 def index():
-    return """
-    <h1>Massyanya-2.0</h1>
-    <p>Добро пожаловать в веб-интерфейс!</p>
-    <ul>
-        <li><a href="/start-bot">Запустить Telegram-бота</a></li>
-        <li><a href="/run-predictions">Запустить предсказания</a></li>
-    </ul>
-    """
+    return render_template("index.html")
+
+
+# --- График ---
+@app.route("/analytics")
+def analytics():
+    return render_template("analytics.html")
+
+
+# --- Настройки торговли ---
+@app.route("/trade-settings")
+def trade_settings():
+    return render_template("trade_settings.html")
+
+
+# --- База данных ---
+@app.route("/data")
+def data():
+    return render_template("data.html")
+
+
+# --- IP и Ключи ---
+@app.route("/keys")
+def keys():
+    return render_template("keys.html")
+
 
 # --- Запуск Telegram-бота ---
 @app.route("/start-bot")
@@ -49,15 +65,22 @@ def start_bot():
     except Exception as e:
         return f"Ошибка при запуске Telegram Bot: {str(e)}"
 
+
 # --- Запуск предсказаний ---
 @app.route("/run-predictions", methods=["GET"])
 def run_predictions():
     try:
         currency_cross = request.args.get("currency_cross", "EUR/USD")
-        data = investpy.get_currency_cross_recent_data(currency_cross=currency_cross)
-        return jsonify({"message": "Предсказания успешно выполнены!", "data": data.head().to_dict()})
+        # Симулируем данные для теста
+        data = {
+            "2024-12-01": 1.200,
+            "2024-12-02": 1.205,
+            "2024-12-03": 1.210
+        }
+        return jsonify({"message": "Предсказания успешно выполнены!", "data": data})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 # --- Точка входа ---
 if __name__ == "__main__":
