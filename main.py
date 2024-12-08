@@ -8,18 +8,27 @@ import threading
 from backend.services.trading_service import start_trading, stop_trading
 from backend.services.forecast_service import make_forecast
 from backend.api.trading_api import trading_api
+from backend.api.analytics_api import analytics_api
+from backend.api.data_api import data_api
+from backend.api.telegram_api import telegram_api
 
-app = Flask(__name__)
-app.register_blueprint(trading_api, url_prefix="/api/trading")
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
-
-# Загрузка переменных из .env
-load_dotenv(dotenv_path="config/.env")
-TOKEN = os.getenv("TOKEN")
-CHAT_ID = os.getenv("CHATID")
 
 # --- Инициализация Flask-приложения ---
 app = Flask(__name__)
+
+# --- Регистрация API-маршрутов ---
+app.register_blueprint(analytics_api, url_prefix="/api/analytics")
+app.register_blueprint(data_api, url_prefix="/api/data")
+app.register_blueprint(telegram_api, url_prefix="/api/telegram")
+app.register_blueprint(trading_api, url_prefix="/api/trading")
+
+# --- Загрузка переменных из .env ---
+load_dotenv(dotenv_path="config/.env")
+TOKEN = os.getenv("TOKEN")
+CHAT_ID = os.getenv("CHATID")
 
 # --- Настройка MinIO ---
 minio_client = Minio(
@@ -90,20 +99,6 @@ def forecast_route():
     try:
         result = make_forecast()
         return jsonify({"status": "Прогноз успешно выполнен!", "result": result}), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-# --- Запуск предсказаний ---
-@app.route("/run-predictions", methods=["GET"])
-def run_predictions():
-    try:
-        currency_cross = request.args.get("currency_cross", "EUR/USD")
-        data = {
-            "2024-12-01": 1.200,
-            "2024-12-02": 1.205,
-            "2024-12-03": 1.210
-        }
-        return jsonify({"message": "Предсказания успешно выполнены!", "data": data})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
