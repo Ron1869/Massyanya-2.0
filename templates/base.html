@@ -22,6 +22,14 @@
             <li><a href="/trade-settings" class="{% if request.path == '/trade-settings' %}active{% endif %}">Настройки торговли</a></li>
             <li><a href="/data" class="{% if request.path == '/data' %}active{% endif %}">База данных</a></li>
             <li><a href="/keys" class="{% if request.path == '/keys' %}active{% endif %}">IP и Ключи для Брокера</a></li>
+		<div class="top-bar">
+    <div class="account-info">
+        <span>Баланс (USDT): {{ balance }}</span>
+        <span> {{ broker_name }}</span>
+    </div>
+</div>
+	
+			
         </ul>
     </nav>
 

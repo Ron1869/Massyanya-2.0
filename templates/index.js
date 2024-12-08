@@ -54,6 +54,34 @@ removeCoinButton.addEventListener('click', () => {
     }
 });
 
+// static/js/index.js
+document.getElementById('startButton').addEventListener('click', async () => {
+    const response = await fetch('/api/trading/start-trading', { method: 'POST' });
+    const result = await response.json();
+    alert(result.message);
+});
+
+document.getElementById('stopButton').addEventListener('click', async () => {
+    const response = await fetch('/api/trading/stop-trading', { method: 'POST' });
+    const result = await response.json();
+    alert(result.message);
+});
+
+document.getElementById("startButton").addEventListener("click", () => {
+    fetch("/start-trading", { method: "POST" })
+        .then(response => response.json())
+        .then(data => alert(data.status))
+        .catch(err => console.error(err));
+});
+
+document.getElementById("stopButton").addEventListener("click", () => {
+    fetch("/stop-trading", { method: "POST" })
+        .then(response => response.json())
+        .then(data => alert(data.status))
+        .catch(err => console.error(err));
+});
+
+
 // Инициализация
 document.addEventListener('DOMContentLoaded', () => {
     renderSavedCoins();

@@ -21,6 +21,29 @@ function sendMessage() {
 
 // Обработка кнопки "Отправить"
 sendButton.addEventListener('click', sendMessage);
+function startBot() {
+    fetch('/start-bot', { method: 'POST' });
+}
+
+function stopBot() {
+    fetch('/stop-bot', { method: 'POST' });
+}
+
+function closeAllPositions() {
+    fetch('/close-positions', { method: 'POST' });
+}
+
+function toggleTG(state) {
+    fetch('/toggle-tg', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ enabled: state })
+    });
+}
+
+function makePrediction() {
+    fetch('/make-prediction', { method: 'POST' });
+}
 
 // Обработка клавиши Enter в чате
 chatBox.addEventListener('keydown', (event) => {

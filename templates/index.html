@@ -3,18 +3,23 @@
 {% block title %}Главная{% endblock %}
 
 {% block content %}
-<h1 class="main-title">
-    <span>😈</span> Massyanya <span>😈</span>
-</h1>
+<h1 class="main-title">Massyanya</h1>
 
-    <p>Баланс (USDT): <span id="balance">50.08</span></p>
-
-    <div class="section-container">
+<div class="main-content">
+    <!-- Верхний блок с чатом, настройками и сохранёнными монетами -->
+    <div class="top-section">
         <!-- Блок чата -->
         <div class="chat-container">
             <h3>Чат команд</h3>
             <div class="chat-box" contenteditable="true" id="chatBox" placeholder="Введите команду..."></div>
-            <button id="sendButton">Отправить</button>
+                <button id="sendButton" class="btn-send">Отправить</button>
+                <button onclick="startBot()" class="btn-start">Запустить Масяню</button>
+                <button onclick="stopBot()" class="btn-stop">Остановить Масяню</button>
+                <button onclick="closeAllPositions()" class="btn-close">Закрыть все позиции</button>
+                <button onclick="toggleTG(true)" class="btn-tg-on">Вкл TG</button>
+                <button onclick="toggleTG(false)" class="btn-tg-off">Выкл TG</button>
+                <button onclick="makePrediction()" class="btn-predict">Прогноз</button>
+
         </div>
 
         <!-- Блок настроек -->
@@ -25,10 +30,10 @@
                 <div class="setting-item">
                     <label>Выбор рынка:</label>
                     <select id="marketSelect">
-                        <option>Спот</option>
                         <option>Фьючерсы</option>
+                        <option>Спот</option>
                     </select>
-                    <span class="setting-info">цена BTC/USDT: <span id="btc-price">91371.10</span></span>
+                    <span class="setting-info">Цена BTC/USDT: <span id="btc-price">91371.10</span></span>
                 </div>
 
                 <!-- Добавить монету -->
@@ -56,11 +61,11 @@
                         <option>4 часа</option>
                         <option>1 день</option>
                     </select>
-                    <span class="setting-info">объем: <span id="volume">13512948251.62</span></span>
+                    <span class="setting-info">Объем: <span id="volume">13512948251.62</span></span>
                 </div>
 
                 <label>Настройки прогноза:</label>
-                <textarea id="forecastSettings" placeholder="Опишите настройки прогноза..."></textarea>
+                <textarea id="forecastSettings" placeholder="Тут будут доп настройки..."></textarea>
                 <button type="submit">Сохранить</button>
             </form>
         </div>
@@ -72,6 +77,33 @@
                 <!-- Список монет будет заполняться динамически -->
             </ul>
         </div>
+    </div>
+
+    <!-- Нижний блок с историей ордеров -->
+    <div class="order-history">
+        <h2>История ордеров</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Тип</th>
+                    <th>Монета</th>
+                    <th>Количество</th>
+                    <th>Цена</th>
+                    <th>Статус</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2024-12-07 14:30</td>
+                    <td>Покупка</td>
+                    <td>BTC/USDT</td>
+                    <td>0.001</td>
+                    <td>40,000</td>
+                    <td>Завершён</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
