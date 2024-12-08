@@ -1,5 +1,5 @@
 
-![Uploading Logotip.png…]()
+![Logotip](https://github.com/user-attachments/assets/94ecfb20-6cdb-47d1-9b81-f9e958a9aff7)
 
 
 
